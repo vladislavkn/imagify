@@ -17,6 +17,6 @@ type Mutation {
 }
 
 type Query {
-  getAllPosts: [Post]
-  getPostById(id: ID): Post
+  getAllPosts(limit: Int): [Post]
+  getPostById(id: ID!): Post
 }

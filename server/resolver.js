@@ -10,8 +10,8 @@ mongoose
   .catch((e) => console.log(e));
 
 module.exports = {
-  async getAllPosts() {
-    return await Post.find({});
+  async getAllPosts({ limit = 999 }) {
+    return await Post.find({}).limit(limit);
   },
   async getPostById({ id }) {
     return await Post.findById(id);
