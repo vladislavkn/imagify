@@ -1,0 +1,19 @@
+type Post {
+  id: ID!
+  imageUrl: String!
+  text: String
+}
+
+input PostInput {
+  imageUrl: String!
+  text: String
+}
+
+type Mutation {
+  addPost(post: PostInput!): Boolean!
+}
+
+type Query {
+  getAllPosts: [Post]
+  getPostById(id: ID): Post
+}
