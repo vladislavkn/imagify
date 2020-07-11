@@ -19,7 +19,8 @@ module.exports = {
     return posts.find((post) => post.id === id);
   },
   addPost({ post }) {
-    posts.push({ ...post, id: posts.length.toString() });
-    return true;
+    const newPost = { ...post, id: posts.length.toString() };
+    posts.push(newPost);
+    return newPost;
   },
 };
