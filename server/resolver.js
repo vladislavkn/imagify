@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("./models/post.js");
 
 mongoose
   .connect(process.env.DATABASEURL, {
@@ -8,41 +9,35 @@ mongoose
   .then(() => console.log("Database connected"))
   .catch((e) => console.log(e));
 
-const posts = [
-  {
-    id: "0",
-    imageUrl: "https://picsum.photos/200/300",
-    text: "test text",
-    likes: 2,
-  },
-  {
-    id: "1",
-    imageUrl: "https://picsum.photos/400/400",
-    text: "",
-    likes: 1,
-  },
-];
-
 module.exports = {
-  getAllPosts(params) {
-    return posts;
+  async getAllPosts() {
+    return await Post.find({});
   },
-  getPostById({ id }) {
-    return posts.find((post) => post.id === id);
+  async getPostById({ id }) {
+    return await Post.findById(id);
   },
-  addPost({ post }) {
-    const newPost = { ...post, id: posts.length.toString(), likes: 0 };
-    posts.push(newPost);
+  async addPost({ post }) {
+    const newPost = await new Post({
+      ...post,
+      likes: 0,
+    }).save();
+
     return newPost;
   },
-  addLike({ id }) {
-    const post = posts.find((post) => post.id === id);
-    post.likes++;
-    return post;
+  async addLike({ id }) {
+    return await Post.findOneAndUpdate(
+      { _id: id },
+      { $inc: { likes: 1 } },
+      { new: true }
+    ).lean();
   },
-  removeLike({ id }) {
-    const post = posts.find((post) => post.id === id);
-    if (post.likes > 0) post.likes--;
-    return post;
+  async removeLike({ id }) {
+    return await Post.findOneAndUpdate(
+      { _id: id },
+      { $inc: { likes: -1 } },
+      {
+        new: true,
+      }
+    ).lean();
   },
 };
