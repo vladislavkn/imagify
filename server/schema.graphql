@@ -1,7 +1,8 @@
 type Post {
   id: ID!
   imageUrl: String!
-  text: String
+  text: String!
+  likes: Int!
 }
 
 input PostInput {
@@ -11,6 +12,8 @@ input PostInput {
 
 type Mutation {
   addPost(post: PostInput!): Post!
+  addLike(id: ID!): Post!
+  removeLike(id: ID!): Post!
 }
 
 type Query {
