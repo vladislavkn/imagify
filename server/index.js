@@ -1,6 +1,7 @@
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
+const resolver = require("./resolver.js");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
@@ -18,6 +19,7 @@ const schema = buildSchema(stringifiedSchema);
 app.use(
   "/graphql",
   graphqlHTTP({
+    rootValue: resolver,
     schema,
     graphiql: true,
   })
