@@ -7,7 +7,7 @@
       @like="onLike"
       @dislike="onDislike"
     />
-    <p v-if="posts.length === 0" class="no-posts">
+    <p v-if="posts && posts.length === 0" class="no-posts">
       No posts yet. Create the first one!
     </p>
   </div>
