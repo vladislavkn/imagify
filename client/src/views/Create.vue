@@ -21,12 +21,14 @@
         type="text"
         class="form__input"
         placeholder="Enter image url..."
+        required
       />
       <input
         v-model="text"
         type="text"
         class="form__input"
         placeholder="Enter text..."
+        maxlength="30"
       />
       <button class="form__submit-btn">Save</button>
     </form>
