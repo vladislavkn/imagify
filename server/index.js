@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+require("dotenv").config();
 
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
