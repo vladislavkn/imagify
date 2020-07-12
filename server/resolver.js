@@ -22,22 +22,24 @@ module.exports = {
       likes: 0,
     }).save();
 
-    return newPost;
+    return true;
   },
   async addLike({ id }) {
-    return await Post.findOneAndUpdate(
+    await Post.findOneAndUpdate(
       { _id: id },
       { $inc: { likes: 1 } },
       { new: true }
-    ).lean();
+    );
+    return true;
   },
   async removeLike({ id }) {
-    return await Post.findOneAndUpdate(
+    await Post.findOneAndUpdate(
       { _id: id },
       { $inc: { likes: -1 } },
       {
         new: true,
       }
-    ).lean();
+    );
+    return true;
   },
 };

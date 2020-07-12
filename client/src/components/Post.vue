@@ -7,7 +7,7 @@
     </h4>
     <button class="post__likes" @click="onPresslike()">
       <img class="post__like-icon" :src="likeIconSource" alt="like icon" />
-      {{ likes }}
+      {{ postLikes }}
     </button>
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
   data() {
     return {
       likeIconSource: "",
+      postLikes: 0,
     };
   },
   computed: {
@@ -67,9 +68,10 @@ export default {
   },
   methods: {
     onPresslike() {
-      this.isLiked = !this.isLiked;
+      const isLiled = (this.isLiked = !this.isLiked);
       this.setLikeIconSource();
-      this.$emit(this.isLiked ? "like" : "dislike");
+      this.postLikes += isLiled ? 1 : -1;
+      this.$emit(isLiled ? "like" : "dislike", { _id: this._id });
     },
     setLikeIconSource() {
       this.likeIconSource = this.isLiked
@@ -79,6 +81,7 @@ export default {
   },
   mounted() {
     this.setLikeIconSource();
+    this.postLikes = this.likes;
   },
 };
 </script>

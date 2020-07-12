@@ -11,9 +11,9 @@ input PostInput {
 }
 
 type Mutation {
-  addPost(post: PostInput!): Post!
-  addLike(id: ID!): Post!
-  removeLike(id: ID!): Post!
+  addPost(post: PostInput!): Boolean!
+  addLike(id: ID!): Boolean!
+  removeLike(id: ID!): Boolean!
 }
 
 type Query {
