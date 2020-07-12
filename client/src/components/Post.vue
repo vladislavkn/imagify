@@ -9,12 +9,7 @@
         {{ text }}
       </h4>
       <button class="post__likes" @click="onPresslike()">
-        <img
-          class="post__like-icon"
-          :src="likeIconSource"
-          alt="like icon"
-          onerror="alert('error')"
-        />
+        <img class="post__like-icon" :src="likeIconSource" alt="like icon" />
         {{ postLikes }}
       </button>
     </div>
@@ -52,14 +47,20 @@ export default {
     isLiked: {
       cache: false,
       set(val) {
-        const likes = JSON.parse(localStorage.getItem("likes") || "{}");
-        likes[this._id] = val;
-        if (likes.length > 12) likes.shift();
+        let likes = JSON.parse(localStorage.getItem("likes") || "[]");
+        if (val) {
+          likes.push(this._id);
+        } else {
+          likes = likes.filter((_) => _ !== this._id);
+        }
+
+        if (likes.length > 12) likes = likes.slice(-12);
         localStorage.setItem("likes", JSON.stringify(likes));
       },
       get() {
-        const likes = JSON.parse(localStorage.getItem("likes") || "{}");
-        return likes[this._id];
+        const likes = JSON.parse(localStorage.getItem("likes") || "[]");
+
+        return likes.includes(this._id);
       },
     },
   },
