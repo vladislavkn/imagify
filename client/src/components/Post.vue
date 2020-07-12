@@ -54,6 +54,7 @@ export default {
       set(val) {
         const likes = JSON.parse(localStorage.getItem("likes") || "{}");
         likes[this._id] = val;
+        if (likes.length > 12) likes.shift();
         localStorage.setItem("likes", JSON.stringify(likes));
       },
       get() {
