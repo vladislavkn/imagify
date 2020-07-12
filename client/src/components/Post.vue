@@ -93,12 +93,14 @@ export default {
   margin: 8px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 256px;
 }
 
 .post__image-wrapper {
   display: flex;
-  flex: 1;
+  width: 256px;
+  height: 256px;
   align-items: center;
   justify-content: center;
   background-color: #f9f9fb;
