@@ -1,14 +1,23 @@
 <template>
   <div class="post">
-    <img :src="imageSource" alt="Post image" />
-    <div class="post__content"></div>
-    <h4 class="post__text">
-      {{ text }}
-    </h4>
-    <button class="post__likes" @click="onPresslike()">
-      <img class="post__like-icon" :src="likeIconSource" alt="like icon" />
-      {{ postLikes }}
-    </button>
+    <div class="post__image-wrapper">
+      <img :src="imageSource" alt="Post image" class="image" />
+    </div>
+
+    <div class="post__content">
+      <h4 class="post__text">
+        {{ text }}
+      </h4>
+      <button class="post__likes" @click="onPresslike()">
+        <img
+          class="post__like-icon"
+          :src="likeIconSource"
+          alt="like icon"
+          onerror="alert('error')"
+        />
+        {{ postLikes }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -36,23 +45,10 @@ export default {
     return {
       likeIconSource: "",
       postLikes: 0,
+      imageSource: require("../assets/Photo.png"),
     };
   },
   computed: {
-    imageSource() {
-      let result;
-      if (this.imageUrl.length) {
-        try {
-          result = require(`../assets/${this.imageUrl}`);
-        } catch (e) {
-          console.error("[Load image error]:", e);
-          result = require("../assets/Photo.png");
-        }
-      } else {
-        result = require("../assets/Photo.png");
-      }
-      return result;
-    },
     isLiked: {
       cache: false,
       set(val) {
@@ -82,6 +78,11 @@ export default {
   mounted() {
     this.setLikeIconSource();
     this.postLikes = this.likes;
+    const img = new Image();
+    img.src = this.imageUrl;
+    img.onload = () => {
+      this.imageSource = this.imageUrl;
+    };
   },
 };
 </script>
@@ -90,7 +91,21 @@ export default {
 .post {
   text-align: center;
   margin: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 256px;
 }
+
+.post__image-wrapper {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9fb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .post__text {
   padding: 16px 0 8px 0;
 }

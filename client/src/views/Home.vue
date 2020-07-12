@@ -21,7 +21,7 @@ export default {
     posts: {
       query: gql`
         query GetAllPosts {
-          getAllPosts(limit: 1) {
+          getAllPosts(limit: 12) {
             imageUrl
             text
             likes
