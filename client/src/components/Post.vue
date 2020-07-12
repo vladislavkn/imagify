@@ -5,8 +5,8 @@
     <h4 class="post__text">
       {{ text }}
     </h4>
-    <button class="post__likes">
-      <img class="post__like-icon" src="../assets/like.svg" alt="like icon" />
+    <button class="post__likes" @click="onPresslike()">
+      <img class="post__like-icon" :src="likeIconSource" alt="like icon" />
       {{ likes }}
     </button>
   </div>
@@ -32,31 +32,52 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      likeIconSource: "",
+    };
+  },
   computed: {
     imageSource() {
       return this.imageUrl.length
         ? require(`../assets/${this.imageUrl}`)
         : require("../assets/Photo.png");
     },
-    // likeIconSource() {
-    //   return this.isLiked
-    //     ? require("../assets/like-filled.svg")
-    //     : require("../assets/like.svg");
-    // },
+    isLiked: {
+      cache: false,
+      set(val) {
+        const likes = JSON.parse(localStorage.getItem("likes") || "{}");
+        likes[this.id] = val;
+        localStorage.setItem("likes", JSON.stringify(likes));
+      },
+      get() {
+        const likes = JSON.parse(localStorage.getItem("likes") || "{}");
+        return likes[this.id];
+      },
+    },
   },
-  // methods: {
-  //   like() {
-  //     this.$emit(this.isLiked ? "like" : "dislike");
-  //   },
-  // },
+  methods: {
+    onPresslike() {
+      this.isLiked = !this.isLiked;
+      this.setLikeIconSource();
+      this.$emit(this.isLiked ? "like" : "dislike");
+    },
+    setLikeIconSource() {
+      this.likeIconSource = this.isLiked
+        ? require("../assets/like-filled.svg")
+        : require("../assets/like.svg");
+    },
+  },
+  mounted() {
+    this.setLikeIconSource();
+  },
 };
 </script>
 
 <style>
 .post {
   text-align: center;
-  margin-right: 16px;
-  margin-bottom: 16px;
+  margin: 8px;
 }
 .post__text {
   padding: 16px 0 8px 0;
