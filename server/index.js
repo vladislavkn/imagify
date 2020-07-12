@@ -1,15 +1,20 @@
-require("dotenv").config();
+const fs = require("fs");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "..", ".env") });
+
 const express = require("express");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
 const resolver = require("./resolver.js");
 const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL,
+  })
+);
 
 const stringifiedSchema = fs.readFileSync(
   path.resolve(__dirname, "schema.graphql"),

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Post = require("./models/post.js");
 
 mongoose
-  .connect(process.env.DATABASEURL, {
+  .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
