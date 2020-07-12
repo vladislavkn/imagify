@@ -5,6 +5,7 @@ mongoose
   .connect(process.env.DATABASEURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
   })
   .then(() => console.log("Database connected"))
   .catch((e) => console.log(e));
@@ -17,10 +18,12 @@ module.exports = {
     return await Post.findById(id);
   },
   async addPost({ post }) {
-    const newPost = await new Post({
+    await new Post({
       ...post,
       likes: 0,
-    }).save();
+    })
+      .save()
+      .catch((e) => console.log(e));
 
     return true;
   },

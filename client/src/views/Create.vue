@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: "Create",
   data() {
@@ -44,6 +46,17 @@ export default {
   },
   methods: {
     onSubmit() {
+      const post = { imageUrl: this.imageUrl, text: this.text };
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation AddPost($post: PostInput!) {
+            addPost(post: $post)
+          }
+        `,
+        varibles: {
+          post,
+        },
+      });
       this.$router.push("/");
     },
   },
