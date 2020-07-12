@@ -6,19 +6,26 @@
 
 <script>
 import Post from "@/components/Post";
+import gql from "graphql-tag";
 
 export default {
   name: "Home",
   components: { Post },
-  data() {
-    return {
-      posts: new Array(10).fill({}).map((_, i) => ({
-        imageUrl: "",
-        text: "Test text",
-        id: `${i}`,
-        likes: i,
-      })),
-    };
+  apollo: {
+    posts: {
+      query: gql`
+        query GetAllPosts {
+          getAllPosts(limit: 1) {
+            imageUrl
+            text
+            likes
+            _id
+          }
+        }
+      `,
+      update: (data) => data.getAllPosts,
+      pollInterval: 60000,
+    },
   },
 };
 </script>

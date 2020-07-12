@@ -8,6 +8,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
-  apolloProvider: createProvider({ url: "http://localhost:3000/graphql" }),
+  apolloProvider: createProvider(),
   render: (h) => h(App),
 }).$mount("#app");

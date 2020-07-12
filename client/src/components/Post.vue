@@ -27,7 +27,7 @@ export default {
       type: Number,
       required: true,
     },
-    id: {
+    _id: {
       type: String,
       required: true,
     },
@@ -39,20 +39,29 @@ export default {
   },
   computed: {
     imageSource() {
-      return this.imageUrl.length
-        ? require(`../assets/${this.imageUrl}`)
-        : require("../assets/Photo.png");
+      let result;
+      if (this.imageUrl.length) {
+        try {
+          result = require(`../assets/${this.imageUrl}`);
+        } catch (e) {
+          console.error("[Load image error]:", e);
+          result = require("../assets/Photo.png");
+        }
+      } else {
+        result = require("../assets/Photo.png");
+      }
+      return result;
     },
     isLiked: {
       cache: false,
       set(val) {
         const likes = JSON.parse(localStorage.getItem("likes") || "{}");
-        likes[this.id] = val;
+        likes[this._id] = val;
         localStorage.setItem("likes", JSON.stringify(likes));
       },
       get() {
         const likes = JSON.parse(localStorage.getItem("likes") || "{}");
-        return likes[this.id];
+        return likes[this._id];
       },
     },
   },
