@@ -16,6 +16,11 @@ export default {
 </script>
 
 <style lang="scss">
+* {
+  box-sizing: border-box;
+  font-family: "Inter", Helvetica, Arial, sans-serif;
+}
+
 body {
   margin: 0;
 }
@@ -30,8 +35,9 @@ p {
   margin: 0;
 }
 
-#app {
-  font-family: "Inter", Helvetica, Arial, sans-serif;
+.image {
+  max-width: 100%;
+  height: auto;
 }
 
 .header__title {
