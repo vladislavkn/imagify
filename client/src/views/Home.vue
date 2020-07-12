@@ -30,7 +30,7 @@ export default {
         }
       `,
       update: (data) => data.getAllPosts,
-      pollInterval: 60000,
+      pollInterval: 5000,
     },
   },
   methods: {

@@ -53,7 +53,7 @@ export default {
             addPost(post: $post)
           }
         `,
-        varibles: {
+        variables: {
           post,
         },
       });
@@ -71,10 +71,16 @@ export default {
 }
 
 .form__image-preview {
+  width: 256px;
+  height: 256px;
   margin-bottom: 16px;
   display: flex;
+  flex: 1;
+  align-items: center;
   justify-content: center;
-  max-width: 100%;
+  background-color: #f9f9fb;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .form__input {
