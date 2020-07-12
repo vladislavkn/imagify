@@ -7,6 +7,9 @@
       @like="onLike"
       @dislike="onDislike"
     />
+    <p v-if="posts.length === 0" class="no-posts">
+      No posts yet. Create the first one!
+    </p>
   </div>
 </template>
 
@@ -67,5 +70,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 32px;
+  color: #82828b;
 }
 </style>
